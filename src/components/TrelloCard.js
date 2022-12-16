@@ -1,7 +1,9 @@
 import { makeStyles, Paper } from '@material-ui/core'
 
 const TrelloCard = () => {
+
   const clases = useStyle();
+
   return (
     <Paper className={clases.trelloCard}>
       card
