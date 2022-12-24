@@ -3,7 +3,7 @@ import { Button, IconButton, InputBase, fade, makeStyles, Paper } from '@materia
 import ClearIcon from "@material-ui/icons/Clear"
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 
-const AddCardListOrText = () => {
+const AddCardListOrText = ({type, setOpen}) => {
 
   const [title, setTitle] = useState("")
   const clases = useStyle();
@@ -13,16 +13,21 @@ const AddCardListOrText = () => {
       <Paper className={clases.card}>
         <InputBase
           multiline
+          onBlur={() => setOpen(false)}
           value={title}
           onChange={e => setTitle(e.target.value)}
-          placeholder='Entre a title for this card...'
+          placeholder={
+            type === 'card' ? 'Enter a title for this card...': 'Enter list title...'
+          }
           inputProps={{className: clases.input}}
         />
       </Paper>
       <div className={clases.confirm}>
         <div  className={clases.btn}>
           <Button className={clases.btnConfirm}>
-            Add Card
+            {
+              type === 'card' ? 'Add Card': 'Add List'
+            }
           </Button>
           <IconButton>  
             <ClearIcon />
