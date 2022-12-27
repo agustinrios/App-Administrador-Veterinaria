@@ -13,7 +13,7 @@ const AddCardOrList = ({type}) => {
         <AddCardListOrText type={type} setOpen={setOpen} />
       </Collapse>
       <Collapse in={!open}>
-        <Paper className={clases.addCard}>
+        <Paper className={clases.addCard} onClick={() => setOpen(true)}>
           <Typography>
             {
               type === 'card' ? '+ Add a Card' : '+ Add Another List'

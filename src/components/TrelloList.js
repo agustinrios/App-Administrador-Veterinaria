@@ -3,15 +3,19 @@ import AddCardOrList from './AddCardOrList';
 import ListTitle from './ListTitle';
 import TrelloCard from './TrelloCard';
 
-const TrelloList = () => {
-
+const TrelloList = ({list}) => {
+  console.log(list)
   const clases = useStyle();
 
   return (
     <Paper className={clases.root}>
       <CssBaseline />
       <ListTitle />
-      <TrelloCard />
+      {
+        list.cards.map(card => (
+          <TrelloCard card={card} key={card.id} />
+        ))
+      }
       <AddCardOrList type="card" />
     </Paper>
   )

@@ -29,7 +29,7 @@ const AddCardListOrText = ({type, setOpen}) => {
               type === 'card' ? 'Add Card': 'Add List'
             }
           </Button>
-          <IconButton>  
+          <IconButton onClick={() => setOpen(false)}>  
             <ClearIcon />
           </IconButton>
         </div>
