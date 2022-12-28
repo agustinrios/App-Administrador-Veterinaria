@@ -1,17 +1,48 @@
-import { makeStyles, Typography } from "@material-ui/core"
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
-import { useState } from 'react'
+import { InputBase, makeStyles, Typography } from "@material-ui/core";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import { useContext, useState } from 'react';
+import contextAPI from "../ContextAPI";
 
-export const ListTitle = () => {
+export const ListTitle = ({title, listId}) => {
   const [open, setOpen] = useState(false)
+  const [newTitle, setNewTitle] = useState(title)
+  const {updateListTitle} = useContext(contextAPI)
   const clases = useStyle();
 
+  const handleBlur = () => {
+    //actualizar title a newTitle
+    updateListTitle(newTitle, listId)
+    setOpen(false)
+  }
+
   return (
-    <div className={clases.title}>
-      <Typography className={clases.titleText}>
-        To Do
-      </Typography>
-      <MoreHorizIcon />
+    <div>
+      { open ? 
+        (
+          <div>
+            <InputBase 
+              value={newTitle}
+              onChange={e => setNewTitle(e.target.value)}
+              onBlur={handleBlur}
+              autoFocus
+              fullWidth
+              inputProps={{className: clases.input}}
+            />
+          </div>
+        )
+        : 
+        (
+          <div className={clases.title}>
+            <Typography 
+              className={clases.titleText}
+              onClick={() => setOpen(true)}
+            >
+              {title}
+            </Typography>
+            <MoreHorizIcon />
+          </div>
+        )
+      }
     </div>
   )
 }
@@ -25,6 +56,14 @@ const useStyle = makeStyles(theme => ({
     flexGrow: 1,
     fontSize: "1.2rem",
     fontWeight: "bold",
+  },
+  input: {
+    fontSize: "1.2rem",
+    fontWeight: "bold",
+    margin: theme.spacing(1),
+    '&:focus': {
+      backgroundColor: "#ddd"
+    }
   }
 }))
 

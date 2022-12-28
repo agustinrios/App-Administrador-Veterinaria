@@ -5,25 +5,40 @@ import backgroun_image from './images/f.jpg';
 import AddCardOrList from './components/AddCardOrList';
 import mockData from './mockData.js';
 import { useState } from 'react';
+import ContextAPI from './ContextAPI';
 
 function App() {
   const clases = useStyle();
   const [data, setData] = useState(mockData);
+  console.log(data)
+  const updateListTitle = (updateTitle, listId) => {
+    const list = data.lists[listId]
+    list.title = updateTitle;
+    setData({
+      ...data,
+      lists: {
+        ...data.lists,
+        [listId] : list
+      }
+    })
+  }
 
   return (
-    <div className={clases.root}>
-      <div className={clases.container}>
-        {
-          data.listIds.map(listID=> {
-            const list = data.lists[listID]
-            return <TrelloList list={list} key={listID} />
-          })
-        }
-        <div>
-          <AddCardOrList type="list" />
+    <ContextAPI.Provider value={{updateListTitle}}>
+      <div className={clases.root}>
+        <div className={clases.container}>
+          {
+            data.listIds.map(listID=> {
+              const list = data.lists[listID]
+              return <TrelloList list={list} key={listID} />
+            })
+          }
+          <div>
+            <AddCardOrList type="list" />
+          </div>
         </div>
       </div>
-    </div>
+    </ContextAPI.Provider>
   );
 }
 
